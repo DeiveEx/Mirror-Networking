@@ -41,6 +41,21 @@ namespace LobbyTest
 			Debug.Log("Players not ready");
 			playersReady?.Invoke(false);
 		}
+
+		public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)
+		{
+			GamePlayer gp = gamePlayer.GetComponent<GamePlayer>();
+
+			if (!gamePlayer)
+			{
+				Debug.LogError("Could not create game player!");
+				return false;
+			}
+
+			gp.nameText.text = roomPlayer.GetComponent<LobbyPlayer>().playerName;
+
+			return true;
+		}
 		#endregion
 
 		#region Client

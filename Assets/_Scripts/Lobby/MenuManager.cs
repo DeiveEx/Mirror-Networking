@@ -13,7 +13,8 @@ namespace LobbyTest
 			Loading,
 			Name,
 			HostOrJoin,
-			Room
+			Room,
+			LevelSelect
 		}
 
 		[System.Serializable]

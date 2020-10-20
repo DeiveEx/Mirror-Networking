@@ -8,6 +8,7 @@ namespace LobbyTest
 {
 	public class LobbyNetworkManager : NetworkRoomManager
 	{
+		//These events will only be called on the server
 		public event Action playerJoined;
 		public event Action playerLeft;
 		public event Action<bool> playersReady;

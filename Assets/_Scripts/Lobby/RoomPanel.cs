@@ -62,6 +62,11 @@ namespace LobbyTest
 
 			return null;
 		} 
+
+		public void GoToLevelSelect()
+		{
+			MenuManager.instance.ShowPanel(MenuManager.PanelType.LevelSelect);
+		}
 		#endregion
 	}
 }

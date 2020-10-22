@@ -12,26 +12,21 @@ namespace LobbyTest
 		public string playerName;
 
 		public event Action infoChanged;
-		public event Action playerDisconnected;
 
 		private void OnDestroy()
 		{
 			infoChanged = null;
-			playerDisconnected?.Invoke();
 		}
 
-		public override void OnStartClient()
+		#region Server
+		[Command]
+		private void CmdChangeName(string newName)
 		{
-			RoomPanel room = MenuManager.instance.GetPanel(MenuManager.PanelType.Room).GetComponent<RoomPanel>();
-			RoomPlayerMenu playerMenu = room.GetFreePanel();
-
-			if(playerMenu != null)
-			{
-				playerMenu.SetOwner(this);
-				infoChanged?.Invoke();
-			}
+			playerName = newName;
 		}
+		#endregion
 
+		#region Client
 		public override void OnClientEnterRoom()
 		{
 			if (hasAuthority)
@@ -39,12 +34,12 @@ namespace LobbyTest
 				CmdChangeName(GameManager.instance.clientPlayerName);
 			}
 		}
-
-		[Command]
-		private void CmdChangeName(string newName)
+		public override void OnStartClient()
 		{
-			playerName = newName;
+			Debug.Log("Client initialized!");
+			GameManager.instance.lobbyManager.ClientJoined();
 		}
+		#endregion
 
 		private void OnPlayerNameChanged(string _old, string _new)
 		{

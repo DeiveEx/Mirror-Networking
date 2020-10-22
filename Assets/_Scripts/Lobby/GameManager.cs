@@ -6,7 +6,7 @@ namespace LobbyTest
 {
 	public class GameManager : Singleton<GameManager>
 	{
+		public LobbyNetworkManager lobbyManager;
 		public string clientPlayerName;
 	}
 }
-

@@ -24,24 +24,35 @@ namespace LobbyTest
 			public GameObject panelObj;
 		}
 
+		public PanelType startPanel;
 		public MenuPanel[] panels;
-
-		public LobbyNetworkManager lobbyManager { get; private set; }
-
 
 		protected override void Awake()
 		{
 			base.Awake();
-			lobbyManager = FindObjectOfType<LobbyNetworkManager>();
+			GameManager.instance.lobbyManager.playerJoined += OnPlayerJoined;
+		}
+
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+			GameManager.instance.lobbyManager.playerJoined -= OnPlayerJoined;
 		}
 
 		private void OnEnable()
 		{
-			ShowPanel(PanelType.Name);	
+			ShowPanel(startPanel);
+		}
+
+		private void OnPlayerJoined()
+		{
+			ShowPanel(PanelType.Room);
 		}
 
 		public void ShowPanel(PanelType type)
 		{
+			Debug.Log($"Changing panel to: {type}");
 			foreach (var panel in panels)
 			{
 				panel.panelObj.SetActive(panel.panelType == type);

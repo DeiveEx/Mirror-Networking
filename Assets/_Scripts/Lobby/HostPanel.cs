@@ -11,13 +11,13 @@ namespace LobbyTest
 
 		public void HostGame()
 		{
-			MenuManager.instance.lobbyManager.StartHost();
+			GameManager.instance.lobbyManager.StartHost();
 		}
 
 		public void JoinGame()
 		{
-			MenuManager.instance.lobbyManager.networkAddress = input.text;
-			MenuManager.instance.lobbyManager.StartClient();
+			GameManager.instance.lobbyManager.networkAddress = input.text;
+			GameManager.instance.lobbyManager.StartClient();
 		}
 	}
 }

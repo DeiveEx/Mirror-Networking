@@ -21,7 +21,12 @@ namespace LobbyTest
 		public override void OnRoomServerConnect(NetworkConnection conn)
 		{
 			Debug.Log("A client connected");
-			playerJoined?.Invoke();
+		}
+
+		public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
+		{
+			GameObject roomPlayer = Instantiate(roomPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+			return roomPlayer;
 		}
 
 		public override void OnRoomServerDisconnect(NetworkConnection conn)
@@ -52,9 +57,14 @@ namespace LobbyTest
 				return false;
 			}
 
-			gp.nameText.text = roomPlayer.GetComponent<LobbyPlayer>().playerName;
+			gp.playerName = roomPlayer.GetComponent<LobbyPlayer>().playerName;
 
 			return true;
+		}
+
+		public void ClientJoined()
+		{
+			playerJoined?.Invoke();
 		}
 		#endregion
 
@@ -68,11 +78,11 @@ namespace LobbyTest
 			ChangePanel(MenuManager.PanelType.HostOrJoin);
 		}
 
-		//This will be called on the client when it successfully connects to the server (dont forget that the host is also a client)
-		public override void OnRoomClientConnect(NetworkConnection conn)
-		{
-			ChangePanel(MenuManager.PanelType.Room);
-		}
+		////This will be called on the client when it successfully connects to the server (dont forget that the host is also a client)
+		//public override void OnRoomClientConnect(NetworkConnection conn)
+		//{
+		//	ChangePanel(MenuManager.PanelType.Room);
+		//}
 		#endregion
 
 		#region Misc

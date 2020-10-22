@@ -19,25 +19,32 @@ namespace LobbyTest
 		private void OnEnable()
 		{
 			readyButton.gameObject.SetActive(false);
-			OnPlayer_infoChanged();
+			UpdateInfo();
 		}
 
 		public void SetOwner(LobbyPlayer player)
 		{
             playerObj = player;
-			player.infoChanged += OnPlayer_infoChanged;
-			player.playerDisconnected += OnPlayer_playerDisconnected;
+			player.infoChanged += UpdateInfo;
 
 			readyButton.gameObject.SetActive(playerObj.hasAuthority);
+		}
+
+		private void OnDestroy()
+		{
+			if (playerObj != null)
+			{
+				playerObj.infoChanged -= UpdateInfo;
+			}
 		}
 
 		private void OnPlayer_playerDisconnected()
 		{
 			playerObj = null;
-			OnPlayer_infoChanged();
+			UpdateInfo();
 		}
 
-		private void OnPlayer_infoChanged()
+		public void UpdateInfo()
 		{
 			if (playerObj == null)
 			{

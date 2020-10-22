@@ -8,7 +8,7 @@ namespace LobbyTest
 	{
 		public void GoToLevel(string levelName)
 		{
-			MenuManager.instance.lobbyManager.ServerChangeScene(levelName);
+			GameManager.instance.lobbyManager.ServerChangeScene(levelName);
 		}
 
 		public void BackToLobby()
